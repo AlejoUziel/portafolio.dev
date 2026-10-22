@@ -37,3 +37,19 @@
 :target {
   scroll-margin-block: 1rem;
 }
+
+/* Faint code-symbol pattern behind the page */
+body {
+  isolation: isolate;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--foreground);
+  opacity: 0.045;
+  mask: url("/code-pattern.svg") repeat;
+  -webkit-mask: url("/code-pattern.svg") repeat;
+}

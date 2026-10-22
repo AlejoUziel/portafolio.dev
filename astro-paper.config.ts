@@ -29,6 +29,7 @@ export default defineAstroPaperConfig({
   socials: [
     { name: "github", url: "https://github.com/AlejoUziel", linkTitle: "Uziel en GitHub" },
     { name: "whatsapp", url: "https://wa.me/50488935250", linkTitle: "Escríbeme por WhatsApp" },
+    { name: "linkedin", url: "https://www.linkedin.com/in/uziel-garcia-322832252/", linkTitle: "Uziel en LinkedIn" },
     { name: "mail", url: "mailto:uzielalejandro777@gmail.com", linkTitle: "Envíame un correo" },
   ],
   shareLinks: [
