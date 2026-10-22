@@ -5,7 +5,7 @@ export default defineAstroPaperConfig({
     url: "https://uziel.dev/",
     title: "UZIEL.DEV",
     description:
-      "Uziel Alejandro Garcia — Desarrollador web desde Roatán, Islas de la Bahía. Diseño que convierte.",
+      "Uziel Garcia, desarrollador web en Roatán, Islas de la Bahía, Honduras. Diseño de sitios web, software a la medida y automatizaciones para negocios turísticos.",
     author: "Uziel Garcia",
     profile: "https://uziel.dev",
     ogImage: "default-og.jpg",

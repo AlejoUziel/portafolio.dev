@@ -23,9 +23,73 @@ const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 const homePath = getRelativeLocaleUrl(locale, "");
+
+const siteUrl = new URL(import.meta.env.BASE_URL, Astro.site).href;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}#website`,
+      url: siteUrl,
+      name: config.site.title,
+      description: config.site.description,
+      inLanguage: config.site.lang,
+      publisher: { "@id": `${siteUrl}#person` },
+    },
+    {
+      "@type": "Person",
+      "@id": `${siteUrl}#person`,
+      name: "Uziel Alejandro Garcia",
+      alternateName: config.site.author,
+      jobTitle: "Desarrollador web",
+      url: siteUrl,
+      email: "mailto:uzielalejandro777@gmail.com",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Roatán",
+        addressRegion: "Islas de la Bahía",
+        addressCountry: "HN",
+      },
+      sameAs: socials
+        .filter(({ name }) => name === "github" || name === "linkedin")
+        .map(({ url }) => url),
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": `${siteUrl}#service`,
+      name: config.site.title,
+      description: config.site.description,
+      url: siteUrl,
+      telephone: "+50488935250",
+      email: "uzielalejandro777@gmail.com",
+      priceRange: "L16,000 - L30,000",
+      founder: { "@id": `${siteUrl}#person` },
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Roatán",
+        addressRegion: "Islas de la Bahía",
+        addressCountry: "HN",
+      },
+      areaServed: ["Roatán", "Islas de la Bahía", "Honduras"],
+      knowsAbout: [
+        "Diseño web",
+        "SEO",
+        "Software a la medida",
+        "Automatizaciones",
+      ],
+    },
+  ],
+};
 ---
 
-<Layout>
+<Layout title={`${config.site.author} | Desarrollador web en Roatán, Honduras`}>
+  <script
+    slot="head"
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(structuredData)}
+  />
   <Header />
   <main
     id="main-content"
@@ -53,8 +117,8 @@ const homePath = getRelativeLocaleUrl(locale, "");
       </a>
 
       <p>
-        Desarrollador web desde Roatán, Islas de la Bahía. Sitios web,
-        software a la medida y automatizaciones.
+        Desarrollador web desde Roatán, Islas de la Bahía. Sitios web, software
+        a la medida y automatizaciones.
       </p>
       <p class="mt-2">
         Aquí, donde el turismo mueve a millones de personas, tu negocio merece
