@@ -53,3 +53,12 @@ body::before {
   mask: url("/code-pattern.svg") repeat;
   -webkit-mask: url("/code-pattern.svg") repeat;
 }
+
+/* Call-to-action buttons */
+@utility btn-primary {
+  @apply bg-accent text-accent-foreground inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 font-semibold transition hover:-translate-y-0.5 hover:opacity-90;
+}
+
+@utility btn-secondary {
+  @apply border-accent text-accent hover:bg-accent/10 inline-flex items-center justify-center gap-2 rounded-full border-2 px-5 py-2.5 font-semibold transition hover:-translate-y-0.5;
+}

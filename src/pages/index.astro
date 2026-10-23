@@ -9,6 +9,9 @@ import Footer from "@/components/Footer.astro";
 import Socials from "@/components/Socials.astro";
 import Card from "@/components/Card.astro";
 import LinkButton from "@/components/LinkButton.astro";
+import ContactCta from "@/components/ContactCta.astro";
+import IconWhatsapp from "@/assets/icons/socials/whatsapp.svg";
+import { projects } from "@/data/projects";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
@@ -23,6 +26,10 @@ const sortedPosts = getSortedPosts(posts);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 const homePath = getRelativeLocaleUrl(locale, "");
+const contactPath = getRelativeLocaleUrl(locale, "contacto");
+const whatsappUrl =
+  socials.find(({ name }) => name === "whatsapp")?.url ??
+  "https://wa.me/50488935250";
 
 const siteUrl = new URL(import.meta.env.BASE_URL, Astro.site).href;
 const structuredData = {
@@ -97,43 +104,58 @@ const structuredData = {
     data-home-path={homePath}
     class="app-layout my-1"
   >
-    <section id="hero" class="border-border border-b pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Alejandro Garcia
-      </h1>
-      <a
-        target="_blank"
-        href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
-        class="inline-block"
-        aria-label="RSS Feed"
-        title="RSS Feed"
+    <section id="hero" class="border-border border-b pt-8 pb-10">
+      <span
+        class="border-accent/40 bg-accent/10 text-accent inline-flex items-center gap-2 rounded-full border px-3 py-1 text-sm font-medium"
       >
-        <IconRss
-          width={20}
-          height={20}
-          class="stroke-accent scale-125 stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">RSS Feed</span>
-      </a>
-
-      <p>
-        Desarrollador web desde Roatán, Islas de la Bahía. Sitios web, software
-        a la medida y automatizaciones.
-      </p>
-      <p class="mt-2">
-        Aquí, donde el turismo mueve a millones de personas, tu negocio merece
-        estar en el mapa digital. Conoce{" "}
-        <LinkButton
-          class="hover:text-accent underline decoration-dashed underline-offset-4"
-          href={getRelativeLocaleUrl(locale, "about")}
+        <span class="bg-accent size-2 animate-pulse rounded-full"></span>
+        Disponible para nuevos proyectos
+      </span>
+      <div class="flex items-center gap-3">
+        <h1 class="my-4 inline-block text-4xl font-bold sm:my-6 sm:text-5xl">
+          Alejandro Garcia
+        </h1>
+        <a
+          target="_blank"
+          href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
+          class="inline-block"
+          aria-label="RSS Feed"
+          title="RSS Feed"
         >
-          mis proyectos y precios
-        </LinkButton>{" "}
-        o lee el blog.
+          <IconRss
+            width={20}
+            height={20}
+            class="stroke-accent scale-125 stroke-3 rtl:-rotate-90"
+          />
+          <span class="sr-only">RSS Feed</span>
+        </a>
+      </div>
+
+      <p class="text-lg">
+        Desarrollador web desde <strong>Roatán, Islas de la Bahía</strong>.
+        Sitios web, software a la medida y automatizaciones que convierten
+        visitantes en clientes.
       </p>
+
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+        <a href={contactPath} class="btn-primary">
+          Cotiza tu sitio web
+          <IconArrowRight class="size-5 rtl:-rotate-180" />
+        </a>
+        <a
+          href={whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-secondary"
+        >
+          <IconWhatsapp class="size-5" />
+          WhatsApp
+        </a>
+      </div>
+
       {
         socials.length > 0 && (
-          <div class="mt-4 flex max-sm:flex-col sm:items-center">
+          <div class="mt-6 flex max-sm:flex-col sm:items-center">
             <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">
               {t.home.socialLinks}:
             </div>
@@ -141,6 +163,76 @@ const structuredData = {
           </div>
         )
       }
+    </section>
+
+    <section id="sobre-mi" class="border-border border-b pt-12 pb-10">
+      <h2 class="text-2xl font-semibold tracking-wide">Sobre mí</h2>
+      <div class="mt-4 space-y-3">
+        <p>
+          Soy <strong>Uziel Alejandro Garcia</strong>, desarrollador web en
+          Roatán. Aquí, donde el turismo mueve a millones de personas, ayudo a
+          negocios locales a estar en el mapa digital.
+        </p>
+        <p>
+          Me especializo en sitios para <strong>tour operators</strong>,
+          <strong>bienes raíces</strong> y negocios turísticos: rápidos,
+          optimizados para Google y pensados para que tus clientes reserven
+          antes de llegar a la isla. También creo software a la medida y
+          automatizaciones para que tu operación funcione sola.
+        </p>
+      </div>
+      <LinkButton
+        href={getRelativeLocaleUrl(locale, "about")}
+        class="text-accent mt-4 font-medium underline decoration-dashed underline-offset-4"
+      >
+        Conoce más sobre mí y mis precios
+        <IconArrowRight class="inline-block size-5 rtl:-rotate-180" />
+      </LinkButton>
+    </section>
+
+    <section id="proyectos" class="border-border border-b pt-12 pb-10">
+      <h2 class="text-2xl font-semibold tracking-wide">Proyectos</h2>
+      <ul class="mt-6 grid gap-6 sm:grid-cols-2">
+        {
+          projects.map(project => (
+            <li class="border-border bg-background flex flex-col rounded-xl border-2 transition hover:-translate-y-1 hover:shadow-lg">
+              <div class="flex flex-1 flex-col p-5">
+                <h3 class="text-lg font-semibold">{project.title}</h3>
+                <p class="text-muted-foreground mt-2 flex-1 text-sm">
+                  {project.description}
+                </p>
+                <ul class="mt-3 flex flex-wrap gap-2">
+                  {project.tags.map(tag => (
+                    <li class="bg-muted rounded-full px-2 py-0.5 text-xs">
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+                {project.url && (
+                  <a
+                    href={project.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-accent mt-4 inline-flex items-center gap-1 font-medium hover:underline"
+                  >
+                    Visitar sitio
+                    <IconArrowRight class="size-4 rtl:-rotate-180" />
+                  </a>
+                )}
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-6">
+        ¿Tu negocio podría ser el siguiente?{" "}
+        <a
+          href={contactPath}
+          class="text-accent font-medium underline decoration-dashed underline-offset-4"
+        >
+          Hablemos
+        </a>
+      </p>
     </section>
 
     {
@@ -185,6 +277,8 @@ const structuredData = {
         <IconArrowRight class="inline-block rtl:-rotate-180" />
       </LinkButton>
     </div>
+
+    <ContactCta />
   </main>
   <Footer />
 </Layout>

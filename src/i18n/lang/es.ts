@@ -6,6 +6,7 @@ export default {
     posts: "Blog",
     tags: "Etiquetas",
     about: "Sobre mí",
+    contact: "Contacto",
     archives: "Archivo",
     search: "Buscar",
   },

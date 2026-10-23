@@ -1,0 +1,150 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Breadcrumb from "@/components/Breadcrumb.astro";
+import Main from "@/components/Main.astro";
+import Footer from "@/components/Footer.astro";
+import IconWhatsapp from "@/assets/icons/socials/whatsapp.svg";
+import IconMail from "@/assets/icons/socials/mail.svg";
+import config from "@/config";
+
+// FormSubmit envía el formulario al correo sin necesidad de backend.
+// La primera vez que alguien lo use, FormSubmit manda un correo de activación.
+const contactEmail = "uzielalejandro777@gmail.com";
+const formAction = `https://formsubmit.co/${contactEmail}`;
+const thanksUrl = new URL("contacto/?enviado=1", Astro.site).href;
+
+const whatsappUrl =
+  config.socials.find(({ name }) => name === "whatsapp")?.url ??
+  "https://wa.me/50488935250";
+
+const inputClass =
+  "border-border bg-background focus:border-accent w-full rounded-lg border-2 px-3 py-2 outline-none";
+---
+
+<Layout
+  title={`Contacto | ${config.site.title}`}
+  description="Cotiza tu sitio web, software a la medida o automatización en Roatán. Escríbeme por formulario o WhatsApp."
+>
+  <Header />
+  <Breadcrumb />
+
+  <Main
+    pageTitle="Hablemos de tu proyecto"
+    pageDesc="Cuéntame qué necesitas y te respondo en menos de 24 horas con una propuesta."
+  >
+    <div
+      id="form-success"
+      class="border-accent bg-accent/10 mb-6 hidden rounded-lg border p-4"
+      role="status"
+    >
+      ¡Gracias! Tu mensaje fue enviado. Te contactaré muy pronto.
+    </div>
+
+    <form
+      id="contact-form"
+      action={formAction}
+      method="POST"
+      class="grid gap-4 sm:grid-cols-2"
+    >
+      <input type="hidden" name="_subject" value="Nuevo mensaje desde uziel.dev" />
+      <input type="hidden" name="_next" value={thanksUrl} />
+      <input type="hidden" name="_template" value="table" />
+      <input type="text" name="_honey" class="hidden" tabindex="-1" autocomplete="off" />
+
+      <label class="flex flex-col gap-1">
+        <span class="font-medium">Nombre *</span>
+        <input name="nombre" required class={inputClass} autocomplete="name" />
+      </label>
+      <label class="flex flex-col gap-1">
+        <span class="font-medium">Correo *</span>
+        <input
+          type="email"
+          name="email"
+          required
+          class={inputClass}
+          autocomplete="email"
+        />
+      </label>
+      <label class="flex flex-col gap-1">
+        <span class="font-medium">Negocio</span>
+        <input name="negocio" class={inputClass} placeholder="Ej. Tour operator" />
+      </label>
+      <label class="flex flex-col gap-1">
+        <span class="font-medium">Plan de interés</span>
+        <select name="plan" class={inputClass}>
+          <option>No estoy seguro</option>
+          <option>Starter — L 16,000</option>
+          <option>Pro — L 25,000</option>
+          <option>Business — L 30,000</option>
+          <option>Software a la medida / Automatización</option>
+        </select>
+      </label>
+      <label class="flex flex-col gap-1 sm:col-span-2">
+        <span class="font-medium">Mensaje *</span>
+        <textarea
+          name="mensaje"
+          rows="5"
+          required
+          class={inputClass}
+          placeholder="Cuéntame sobre tu negocio y lo que necesitas..."></textarea>
+      </label>
+
+      <div class="flex flex-col gap-3 sm:col-span-2 sm:flex-row">
+        <button type="submit" class="btn-primary">
+          <IconMail class="size-5" />
+          Enviar mensaje
+        </button>
+        <button
+          type="button"
+          id="send-whatsapp"
+          data-whatsapp={whatsappUrl}
+          class="btn-secondary"
+        >
+          <IconWhatsapp class="size-5" />
+          Enviar por WhatsApp
+        </button>
+      </div>
+    </form>
+
+    <p class="text-muted-foreground mt-8 text-sm">
+      📍 Roatán, Islas de la Bahía, Honduras · 📞{" "}
+      <a class="hover:text-accent underline" href="tel:+50488935250">
+        +504 8893-5250
+      </a>{" "}
+      · ✉️{" "}
+      <a class="hover:text-accent underline" href={`mailto:${contactEmail}`}>
+        {contactEmail}
+      </a>
+    </p>
+  </Main>
+
+  <Footer />
+</Layout>
+
+<script>
+  function initContactForm() {
+    const form = document.querySelector<HTMLFormElement>("#contact-form");
+    const waButton = document.querySelector<HTMLButtonElement>("#send-whatsapp");
+    if (!form || !waButton) return;
+
+    if (new URLSearchParams(location.search).has("enviado")) {
+      document.querySelector("#form-success")?.classList.remove("hidden");
+    }
+
+    waButton.addEventListener("click", () => {
+      const data = new FormData(form);
+      const lines = [
+        `Hola Uziel, soy ${data.get("nombre") || "..."}.`,
+        data.get("negocio") ? `Negocio: ${data.get("negocio")}` : "",
+        `Plan: ${data.get("plan")}`,
+        data.get("mensaje") ? `\n${data.get("mensaje")}` : "",
+      ].filter(Boolean);
+      const url = `${waButton.dataset.whatsapp}?text=${encodeURIComponent(lines.join("\n"))}`;
+      window.open(url, "_blank", "noopener");
+    });
+  }
+
+  initContactForm();
+  document.addEventListener("astro:after-swap", initContactForm);
+</script>
