@@ -6,6 +6,8 @@ import Main from "@/components/Main.astro";
 import Footer from "@/components/Footer.astro";
 import IconWhatsapp from "@/assets/icons/socials/whatsapp.svg";
 import IconMail from "@/assets/icons/socials/mail.svg";
+import ContactInfo from "@/components/ContactInfo.astro";
+import { plans } from "@/data/pricing";
 import config from "@/config";
 
 // FormSubmit envía el formulario al correo sin necesidad de backend.
@@ -74,9 +76,13 @@ const inputClass =
         <span class="font-medium">Plan de interés</span>
         <select name="plan" class={inputClass}>
           <option>No estoy seguro</option>
-          <option>Starter — L 16,000</option>
-          <option>Pro — L 25,000</option>
-          <option>Business — L 30,000</option>
+          {
+            plans.map(plan => (
+              <option data-plan={plan.id}>
+                {plan.name} — {plan.price}
+              </option>
+            ))
+          }
           <option>Software a la medida / Automatización</option>
         </select>
       </label>
@@ -107,16 +113,7 @@ const inputClass =
       </div>
     </form>
 
-    <p class="text-muted-foreground mt-8 text-sm">
-      📍 Roatán, Islas de la Bahía, Honduras · 📞{" "}
-      <a class="hover:text-accent underline" href="tel:+50488935250">
-        +504 8893-5250
-      </a>{" "}
-      · ✉️{" "}
-      <a class="hover:text-accent underline" href={`mailto:${contactEmail}`}>
-        {contactEmail}
-      </a>
-    </p>
+    <ContactInfo class="border-border mt-10 border-t pt-8" />
   </Main>
 
   <Footer />
@@ -128,9 +125,14 @@ const inputClass =
     const waButton = document.querySelector<HTMLButtonElement>("#send-whatsapp");
     if (!form || !waButton) return;
 
-    if (new URLSearchParams(location.search).has("enviado")) {
+    const params = new URLSearchParams(location.search);
+    if (params.has("enviado")) {
       document.querySelector("#form-success")?.classList.remove("hidden");
     }
+    const planOption = form.querySelector<HTMLOptionElement>(
+      `option[data-plan="${params.get("plan")}"]`
+    );
+    if (planOption) planOption.selected = true;
 
     waButton.addEventListener("click", () => {
       const data = new FormData(form);

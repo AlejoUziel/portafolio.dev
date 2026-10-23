@@ -1,0 +1,50 @@
+---
+import IconMapPin from "@/assets/icons/IconMapPin.svg";
+import IconPhone from "@/assets/icons/IconPhone.svg";
+import IconWhatsapp from "@/assets/icons/socials/whatsapp.svg";
+import IconMail from "@/assets/icons/socials/mail.svg";
+
+type Props = { class?: string };
+
+const { class: className } = Astro.props;
+
+const items = [
+  { Icon: IconMapPin, label: "Roatán, Islas de la Bahía, Honduras" },
+  { Icon: IconPhone, label: "+504 8893-5250", href: "tel:+50488935250" },
+  {
+    Icon: IconWhatsapp,
+    label: "WhatsApp",
+    href: "https://wa.me/50488935250",
+    external: true,
+  },
+  {
+    Icon: IconMail,
+    label: "uzielalejandro777@gmail.com",
+    href: "mailto:uzielalejandro777@gmail.com",
+  },
+];
+---
+
+<ul class:list={["grid gap-3 sm:grid-cols-2", className]}>
+  {
+    items.map(({ Icon, label, href, external }) => (
+      <li class="flex items-center gap-3">
+        <span class="bg-accent/10 text-accent flex size-9 shrink-0 items-center justify-center rounded-full">
+          <Icon class="size-5" />
+        </span>
+        {href ? (
+          <a
+            href={href}
+            class="hover:text-accent break-all"
+            target={external ? "_blank" : undefined}
+            rel={external ? "noopener noreferrer" : undefined}
+          >
+            {label}
+          </a>
+        ) : (
+          <span>{label}</span>
+        )}
+      </li>
+    ))
+  }
+</ul>

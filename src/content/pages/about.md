@@ -21,26 +21,6 @@ Desarrollo web moderno desde la isla. Aquí, donde el turismo mueve a millones d
 - [**Roatán Paradise Adventures**](https://roatanparadiseadventures.com/) — Sitio web para tour operator en Roatán. Muestra excursiones de snorkel, ATV, canopy, cabalgatas y tours por la isla, con precios y reservación en línea.
 - [**Viviana Mendez Real Estate Agent**](https://www.vivianamendezrealestateagent.com/) — Sitio web para agente de bienes raíces en Roatán. Presenta lotes, terrenos y casas en la isla, incluyendo propiedades con vista al mar y oportunidades de inversión.
 - [**AT21 Tours Roatán**](https://at21toursroatan.com) — Sitio web para tour operator local. Diseñado para atraer turistas internacionales y facilitar reservaciones desde cualquier parte del mundo.
-- **Roatán Family Tours** — Plataforma de experiencias familiares en Roatán. Diseño pensado para generar confianza y facilitar la conversión de visitantes a clientes.
+- [**Roatán Family Tours**](https://www.roatanfamilytours.com/) — Plataforma de experiencias familiares en Roatán. Diseño pensado para generar confianza y facilitar la conversión de visitantes a clientes.
 
 ¿Tienes un negocio en las Islas de la Bahía? Tu sitio web podría estar aquí. Hablemos y construyamos algo increíble juntos.
-
-## Precios
-
-Hacer un sitio web no es un gasto, es una inversión a largo plazo. Con un buen sitio web, tu negocio trabaja por ti las 24 horas del día, los 7 días de la semana, los 365 días del año. ¿Cuánto vale eso?
-
-| Plan                        | Precio   | Incluye                                                                                                                                                     |
-| --------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Starter** — Para empezar  | L 16,000 | Sitio de 1-3 páginas, diseño responsivo mobile, formulario de contacto, enlace WhatsApp, Google Maps integrado                                              |
-| **Pro** — Más solicitado    | L 25,000 | Sitio de hasta 6 páginas, diseño premium personalizado, animaciones y efectos, SEO básico optimizado, carrusel de fotos/productos, soporte 3 meses incluido |
-| **Business** — Para escalar | L 30,000 | Páginas ilimitadas, e-commerce / reservaciones, SEO avanzado + Analytics, panel de administración, capacitación incluida, soporte 12 meses                  |
-
-_Todos los precios son negociables. También acepto pagos en dólares USD. Pago 50% al inicio, 50% al entregar._
-
-## Hablemos
-
-Tu negocio merece más.
-
-- 📍 Roatán, Islas de la Bahía, Honduras
-- 📞 [+504 8893-5250](tel:+50488935250) · [WhatsApp](https://wa.me/50488935250)
-- ✉️ [uzielalejandro777@gmail.com](mailto:uzielalejandro777@gmail.com)
