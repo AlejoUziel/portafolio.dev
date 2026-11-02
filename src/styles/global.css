@@ -59,6 +59,14 @@ body::before {
   visibility: hidden;
 }
 
+/* Pantalla de inicio: solo visible si Layout.astro agrega `js-intro` */
+#intro {
+  display: none;
+}
+.js-intro #intro {
+  display: flex;
+}
+
 /* GSAP controla `transform`; la transición CSS solo aplica a lo demás */
 [data-tilt],
 [data-magnetic] {

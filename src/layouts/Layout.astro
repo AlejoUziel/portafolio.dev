@@ -116,8 +116,16 @@ const rssHref = getRelativeLocaleUrl(
         // Si el script no carga en 3 s, se muestran igual.
         if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
           root?.classList.add("js-anim");
+          // Pantalla de inicio: solo la primera vez por sesion.
+          try {
+            if (!sessionStorage.getItem("introSeen")) {
+              root?.classList.add("js-intro");
+            }
+          } catch (e) {}
           setTimeout(function () {
-            if (!window.__animReady) root?.classList.remove("js-anim");
+            if (!window.__animReady) {
+              root?.classList.remove("js-anim", "js-intro");
+            }
           }, 3000);
         }
       })();
@@ -128,6 +136,30 @@ const rssHref = getRelativeLocaleUrl(
   <body
     class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"
   >
+    <div
+      id="intro"
+      aria-hidden="true"
+      class="bg-background text-foreground fixed inset-0 z-100 items-center justify-center"
+    >
+      <div
+        data-intro="logo"
+        class="flex items-center gap-[0.4em] text-3xl font-bold sm:text-5xl"
+      >
+        <span class="text-accent inline-flex">
+          <span data-intro="lt" class="inline-block">&lt;</span>
+          <span data-intro="slash" class="inline-block">/</span>
+          <span data-intro="gt" class="inline-block">&gt;</span>
+        </span>
+        <span data-intro="typed" class="inline-flex items-center">
+          <span data-intro="name">uziel.dev</span>
+          <span
+            data-intro="caret"
+            class="bg-accent ms-1 inline-block h-[1em] w-[0.12em]"
+          >
+          </span>
+        </span>
+      </div>
+    </div>
     <div
       id="scroll-progress"
       aria-hidden="true"

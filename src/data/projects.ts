@@ -21,13 +21,6 @@ export const projects: Project[] = [
     tags: ["Bienes raíces", "Catálogo", "SEO"],
   },
   {
-    title: "AT21 Tours Roatán",
-    description:
-      "Sitio para tour operator local, pensado para atraer turistas internacionales y recibir reservaciones desde cualquier país.",
-    url: "https://at21toursroatan.com",
-    tags: ["Turismo", "Responsive", "WhatsApp"],
-  },
-  {
     title: "Roatán Family Tours",
     url: "https://www.roatanfamilytours.com/",
     description:

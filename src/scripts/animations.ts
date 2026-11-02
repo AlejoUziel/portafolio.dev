@@ -22,17 +22,90 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const REDUCED = "(prefers-reduced-motion: reduce)";
 const ANIM_CLASS = "js-anim";
+const INTRO_CLASS = "js-intro";
+const INTRO_KEY = "introSeen";
 
 let mm: gsap.MatchMedia | null = null;
+/** Momento (performance.now) antes del cual no se revela nada con scroll. */
+let revealNotBefore = 0;
 
-function initHero() {
+/**
+ * Pantalla de inicio "</> uziel.dev". Solo se muestra la primera vez por
+ * sesion (Layout.astro decide si agregar la clase `js-intro`).
+ * Devuelve en cuantos segundos debe empezar el resto de animaciones.
+ */
+function initIntro(): number {
+  const root = document.documentElement;
+  const intro = document.querySelector<HTMLElement>("#intro");
+  if (!intro || !root.classList.contains(INTRO_CLASS)) return 0;
+
+  try {
+    sessionStorage.setItem(INTRO_KEY, "1");
+  } catch {
+    /* almacenamiento bloqueado: se mostrara de nuevo, no pasa nada */
+  }
+
+  const q = gsap.utils.selector(intro);
+  const name = SplitText.create(q("[data-intro='name']"), { type: "chars" });
+
+  const tl = gsap.timeline({
+    defaults: { ease: "power3.out" },
+    onComplete: () => root.classList.remove(INTRO_CLASS),
+  });
+
+  tl.from(q("[data-intro='lt']"), { x: "0.6em", autoAlpha: 0, duration: 0.5 })
+    .from(
+      q("[data-intro='gt']"),
+      { x: "-0.6em", autoAlpha: 0, duration: 0.5 },
+      "<"
+    )
+    .from(
+      q("[data-intro='slash']"),
+      {
+        scaleY: 0,
+        rotate: -90,
+        autoAlpha: 0,
+        duration: 0.6,
+        ease: "back.out(2)",
+      },
+      "-=0.2"
+    )
+    .addLabel("type", "+=0.05");
+
+  // "Escribe" uziel.dev letra por letra: cada letra aparece y el cursor la
+  // sigue. El ancho se fija antes para que el logo no se mueva al escribir.
+  const typed = q("[data-intro='typed']")[0];
+  if (typed) gsap.set(typed, { width: typed.offsetWidth });
+  gsap.set(name.chars, { display: "none" });
+  name.chars.forEach((char, i) => {
+    tl.set(char, { display: "inline-block" }, `type+=${i * 0.06}`);
+  });
+
+  tl.to(
+    q("[data-intro='caret']"),
+    { autoAlpha: 0, duration: 0.01, repeat: 3, yoyo: true, repeatDelay: 0.15 },
+    ">"
+  )
+    .to(q("[data-intro='logo']"), {
+      scale: 0.92,
+      autoAlpha: 0,
+      duration: 0.4,
+      ease: "power2.in",
+    })
+    .to(intro, { yPercent: -100, duration: 0.8, ease: "power4.inOut" }, "-=0.1");
+
+  // El hero entra mientras la cortina sube.
+  return tl.duration() - 0.5;
+}
+
+function initHero(delay = 0) {
   const title = document.querySelector<HTMLElement>(
     '[data-animate="hero-title"]'
   );
   const items = gsap.utils.toArray<HTMLElement>('[data-animate="hero"]');
   if (!title && items.length === 0) return;
 
-  const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+  const tl = gsap.timeline({ delay, defaults: { ease: "power3.out" } });
 
   if (title) {
     const split = SplitText.create(title, {
@@ -71,6 +144,7 @@ function initReveal() {
     once: true,
     onEnter: batch =>
       gsap.to(batch, {
+        delay: Math.max(0, (revealNotBefore - performance.now()) / 1000),
         autoAlpha: 1,
         y: 0,
         duration: 0.8,
@@ -190,15 +264,22 @@ function init() {
     },
     c => {
       const { motion, finePointer } = c.conditions ?? {};
+      const root = document.documentElement;
       if (!motion) {
-        document.documentElement.classList.remove(ANIM_CLASS);
+        root.classList.remove(ANIM_CLASS, INTRO_CLASS);
         return;
       }
-      initHero();
+      const introDelay = initIntro();
+      revealNotBefore = performance.now() + introDelay * 1000;
+      initHero(introDelay);
       initReveal();
       initCounters();
       initScrollProgress();
-      return finePointer ? initPointerEffects() : undefined;
+      const pointerCleanup = finePointer ? initPointerEffects() : undefined;
+      return () => {
+        pointerCleanup?.();
+        root.classList.remove(INTRO_CLASS);
+      };
     }
   );
 
