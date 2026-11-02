@@ -24,6 +24,7 @@ const whatsappHref = `${whatsappUrl}?text=${encodeURIComponent(
 ---
 
 <section
+  data-animate="reveal"
   class="border-accent/40 bg-accent/5 my-10 rounded-2xl border p-6 text-center sm:p-10"
 >
   <h2 class="text-2xl font-bold sm:text-3xl">{title}</h2>
@@ -32,6 +33,7 @@ const whatsappHref = `${whatsappUrl}?text=${encodeURIComponent(
     <a
       href={getRelativeLocaleUrl(locale, "contacto")}
       class="btn-primary"
+      data-magnetic
     >
       <IconMail class="size-5" />
       Solicitar cotización
@@ -41,6 +43,7 @@ const whatsappHref = `${whatsappUrl}?text=${encodeURIComponent(
       target="_blank"
       rel="noopener noreferrer"
       class="btn-secondary"
+      data-magnetic
     >
       <IconWhatsapp class="size-5" />
       Escríbeme por WhatsApp

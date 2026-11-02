@@ -111,6 +111,15 @@ const rssHref = getRelativeLocaleUrl(
         root?.classList.toggle("dark", theme === "dark");
         // Expose value so theme.ts can skip re-detection.
         window.__theme = { value: theme };
+
+        // Oculta los elementos animados hasta que GSAP los muestre.
+        // Si el script no carga en 3 s, se muestran igual.
+        if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          root?.classList.add("js-anim");
+          setTimeout(function () {
+            if (!window.__animReady) root?.classList.remove("js-anim");
+          }, 3000);
+        }
       })();
     </script>
 
@@ -119,9 +128,16 @@ const rssHref = getRelativeLocaleUrl(
   <body
     class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"
   >
+    <div
+      id="scroll-progress"
+      aria-hidden="true"
+      class="bg-accent pointer-events-none fixed inset-x-0 top-0 z-50 h-0.5 origin-left scale-x-0"
+    >
+    </div>
     <slot />
     <script>
       import "@/scripts/theme";
+      import "@/scripts/animations";
     </script>
   </body>
 </html>

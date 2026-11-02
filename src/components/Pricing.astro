@@ -19,6 +19,8 @@ const contactPath = getRelativeLocaleUrl(locale, "contacto");
     {
       plans.map(plan => (
         <li
+          data-animate="reveal"
+          data-tilt
           class:list={[
             "relative flex flex-col rounded-2xl border-2 p-6",
             plan.featured
@@ -35,7 +37,13 @@ const contactPath = getRelativeLocaleUrl(locale, "contacto");
           {!plan.featured && (
             <p class="text-muted-foreground text-sm">{plan.tagline}</p>
           )}
-          <p class="mt-4 text-3xl font-bold">{plan.price}</p>
+          <p
+            class="mt-4 text-3xl font-bold tabular-nums"
+            data-count={plan.price.replace(/\D/g, "")}
+            data-count-prefix={plan.price.replace(/[\d,.]+.*$/, "")}
+          >
+            {plan.price}
+          </p>
           <ul class="mt-6 flex-1 space-y-2 text-sm">
             {plan.features.map(feature => (
               <li class="flex items-start gap-2">

@@ -54,6 +54,24 @@ body::before {
   -webkit-mask: url("/code-pattern.svg") repeat;
 }
 
+/* GSAP: ocultar antes de animar (la clase la pone Layout.astro) */
+.js-anim [data-animate] {
+  visibility: hidden;
+}
+
+/* GSAP controla `transform`; la transición CSS solo aplica a lo demás */
+[data-tilt],
+[data-magnetic] {
+  transition-property: color, background-color, border-color, opacity,
+    box-shadow, translate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #scroll-progress {
+    display: none;
+  }
+}
+
 /* Call-to-action buttons */
 @utility btn-primary {
   @apply bg-accent text-accent-foreground inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 font-semibold transition hover:-translate-y-0.5 hover:opacity-90;

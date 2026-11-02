@@ -106,13 +106,17 @@ const structuredData = {
   >
     <section id="hero" class="border-border border-b pt-8 pb-10">
       <div class="flex items-center gap-3">
-        <h1 class="my-4 inline-block text-4xl font-bold sm:my-6 sm:text-5xl">
+        <h1
+          data-animate="hero-title"
+          class="my-4 inline-block text-4xl font-bold sm:my-6 sm:text-5xl"
+        >
           Alejandro Garcia
         </h1>
         <a
           target="_blank"
           href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
           class="inline-block"
+          data-animate="hero"
           aria-label="RSS Feed"
           title="RSS Feed"
         >
@@ -125,14 +129,14 @@ const structuredData = {
         </a>
       </div>
 
-      <p class="text-lg">
+      <p class="text-lg" data-animate="hero">
         Desarrollador web desde <strong>Roatán, Islas de la Bahía</strong>.
         Sitios web, software a la medida y automatizaciones que convierten
         visitantes en clientes.
       </p>
 
-      <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-        <a href={contactPath} class="btn-primary">
+      <div class="mt-6 flex flex-col gap-3 sm:flex-row" data-animate="hero">
+        <a href={contactPath} class="btn-primary" data-magnetic>
           Cotiza tu sitio web
           <IconArrowRight class="size-5 rtl:-rotate-180" />
         </a>
@@ -141,6 +145,7 @@ const structuredData = {
           target="_blank"
           rel="noopener noreferrer"
           class="btn-secondary"
+          data-magnetic
         >
           <IconWhatsapp class="size-5" />
           WhatsApp
@@ -149,7 +154,10 @@ const structuredData = {
 
       {
         socials.length > 0 && (
-          <div class="mt-6 flex max-sm:flex-col sm:items-center">
+          <div
+            class="mt-6 flex max-sm:flex-col sm:items-center"
+            data-animate="hero"
+          >
             <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">
               {t.home.socialLinks}:
             </div>
@@ -160,8 +168,10 @@ const structuredData = {
     </section>
 
     <section id="sobre-mi" class="border-border border-b pt-12 pb-10">
-      <h2 class="text-2xl font-semibold tracking-wide">Sobre mí</h2>
-      <div class="mt-4 space-y-3">
+      <h2 class="text-2xl font-semibold tracking-wide" data-animate="reveal">
+        Sobre mí
+      </h2>
+      <div class="mt-4 space-y-3" data-animate="reveal">
         <p>
           Soy <strong>Uziel Alejandro Garcia</strong>, desarrollador web en
           Roatán. Aquí, donde el turismo mueve a millones de personas, ayudo a
@@ -185,11 +195,17 @@ const structuredData = {
     </section>
 
     <section id="proyectos" class="border-border border-b pt-12 pb-10">
-      <h2 class="text-2xl font-semibold tracking-wide">Proyectos</h2>
+      <h2 class="text-2xl font-semibold tracking-wide" data-animate="reveal">
+        Proyectos
+      </h2>
       <ul class="mt-6 grid gap-6 sm:grid-cols-2">
         {
           projects.map(project => (
-            <li class="border-border bg-background flex flex-col rounded-xl border-2 transition hover:-translate-y-1 hover:shadow-lg">
+            <li
+              data-animate="reveal"
+              data-tilt
+              class="border-border bg-background hover:border-accent/60 flex flex-col rounded-xl border-2 transition hover:shadow-lg"
+            >
               <div class="flex flex-1 flex-col p-5">
                 <h3 class="text-lg font-semibold">{project.title}</h3>
                 <p class="text-muted-foreground mt-2 flex-1 text-sm">
