@@ -14,11 +14,11 @@ export const projects: Project[] = [
     tags: ["Turismo", "Reservaciones", "SEO"],
   },
   {
-    title: "Viviana Mendez Real Estate",
+    title: "Ocean Code",
     description:
-      "Sitio para agente de bienes raíces en Roatán: lotes, terrenos y casas con vista al mar para inversionistas.",
-    url: "https://www.vivianamendezrealestateagent.com/",
-    tags: ["Bienes raíces", "Catálogo", "SEO"],
+      "Sitio para empresa de software en Roatán: sistemas a la medida, tiendas en línea y apps como Manage X y Platia, con cotización y llamada por WhatsApp.",
+    url: "https://oceancoderoatan.com/",
+    tags: ["Software", "Portafolio", "SEO"],
   },
   {
     title: "Roatán Family Tours",
