@@ -23,27 +23,21 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 const REDUCED = "(prefers-reduced-motion: reduce)";
 const ANIM_CLASS = "js-anim";
 const INTRO_CLASS = "js-intro";
-const INTRO_KEY = "introSeen";
 
 let mm: gsap.MatchMedia | null = null;
 /** Momento (performance.now) antes del cual no se revela nada con scroll. */
 let revealNotBefore = 0;
 
 /**
- * Pantalla de inicio "</> uziel.dev". Solo se muestra la primera vez por
- * sesion (Layout.astro decide si agregar la clase `js-intro`).
+ * Pantalla de inicio "</> uziel.dev". Se muestra en cada carga o recarga
+ * completa; Layout.astro agrega la clase `js-intro`. Al navegar entre
+ * paginas con el ClientRouter no se repite.
  * Devuelve en cuantos segundos debe empezar el resto de animaciones.
  */
 function initIntro(): number {
   const root = document.documentElement;
   const intro = document.querySelector<HTMLElement>("#intro");
   if (!intro || !root.classList.contains(INTRO_CLASS)) return 0;
-
-  try {
-    sessionStorage.setItem(INTRO_KEY, "1");
-  } catch {
-    /* almacenamiento bloqueado: se mostrara de nuevo, no pasa nada */
-  }
 
   const q = gsap.utils.selector(intro);
   const name = SplitText.create(q("[data-intro='name']"), { type: "chars" });

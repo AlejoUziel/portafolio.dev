@@ -116,12 +116,9 @@ const rssHref = getRelativeLocaleUrl(
         // Si el script no carga en 3 s, se muestran igual.
         if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
           root?.classList.add("js-anim");
-          // Pantalla de inicio: solo la primera vez por sesion.
-          try {
-            if (!sessionStorage.getItem("introSeen")) {
-              root?.classList.add("js-intro");
-            }
-          } catch (e) {}
+          // Pantalla de inicio en cada carga/recarga completa de la pagina.
+          // (Al navegar con el ClientRouter este script no se vuelve a correr.)
+          root?.classList.add("js-intro");
           setTimeout(function () {
             if (!window.__animReady) {
               root?.classList.remove("js-anim", "js-intro");
